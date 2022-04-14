@@ -46,6 +46,8 @@ swap:
 				
 	sw		t2, 0(t1)	
 	sw		t0, 4(t1)	
-	ret		
+	addi	        t4 zero, 5
+	addi		t5 t3,7
+	addi		t6 t4,7		
 
 # END OF PROGRAM
