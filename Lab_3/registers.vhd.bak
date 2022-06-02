@@ -76,7 +76,7 @@ begin
 	ibit1: bitstorage PORT MAP (datain(0), enout, writein, dataout(0));
 	ibit2: bitstorage PORT MAP (datain(1), enout, writein, dataout(1));
 	ibit3: bitstorage PORT MAP (datain(2), enout, writein, dataout(2));
-	ibit4: bitstorage PORT MAP (datain(3), enout, writein, dataout(3));   --dataflow
+	ibit4: bitstorage PORT MAP (datain(3), enout, writein, dataout(3));
 	ibit5: bitstorage PORT MAP (datain(4), enout, writein, dataout(4));
 	ibit6: bitstorage PORT MAP (datain(5), enout, writein, dataout(5));
 	ibit7: bitstorage PORT MAP (datain(6), enout, writein, dataout(6));
@@ -128,7 +128,7 @@ begin
 				"0000" when others;
 
 	reg1: register8 PORT MAP (datain(31 downto 24), enablingout(3), writingin(3), dataout(31 downto 24));
-	reg2: register8 PORT MAP (datain(23 downto 16), enablingout(2), writingin(2), dataout(23 downto 16)); --4 registers utilizing the previous register8
+	reg2: register8 PORT MAP (datain(23 downto 16), enablingout(2), writingin(2), dataout(23 downto 16)); --4 registers
 	reg3: register8 PORT MAP (datain(15 downto 8), enablingout(1), writingin(1), dataout(15 downto 8));
 	reg4: register8 PORT MAP (datain(7 downto 0), enablingout(0), writingin(0), dataout(7 downto 0));
 end architecture biggermem;
@@ -194,7 +194,7 @@ begin
 	with dir & shamt (1 downto 0) select
 		dataout <= datain(30 downto 0) & '0' when "001",
 			'0' & datain(31 downto 1) when "101",
-			datain(29 downto 0) & "00" when "010",  --scenarios
+			datain(29 downto 0) & "00" when "010",
 			"00" & datain(31 downto 2) when "110",
 			datain(28 downto 0) & "000" when "011",
 			"000" & datain(31 downto 3) when "111",
