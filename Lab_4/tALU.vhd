@@ -1,6 +1,6 @@
 --------------------------------------------------------------------------------
 --
--- Test Bench for LAB #4
+-- Test Bench for LAB #4--------------------------------------------------------
 --
 --------------------------------------------------------------------------------
 LIBRARY ieee;
@@ -50,13 +50,99 @@ BEGIN
 		wait for 100 ns;
 
 		-- Start testing the ALU
-		datain_a <= X"01234567";	-- DataIn in hex
+		datain_a <= X"01234567";	
 		datain_b <= X"11223344";
-		control  <= "00000";		-- Control in binary (ADD and ADDI test)
-		wait for 20 ns; 			-- result = 0x124578AB  and zeroOut = 0
+		control  <= "00000";		
+		wait for 20 ns; 			
 
-		-- Add test cases here to drive the ALU implementation
+		
+		wait for 100 ns;
 
+		--addi
+		datain_a <= X"01234567";
+		datain_b <= X"11223344";
+		control  <= "00001";		
+		wait for 20 ns; 		
+		
+		wait for 100 ns;
+
+		-- sub
+		datain_a <= X"01234567";
+		datain_b <= X"11223344";
+		control  <= "00010";		
+		wait for 20 ns; 		
+
+		wait for 100 ns;
+
+		-- or
+		datain_a <= X"01234567";
+		datain_b <= X"11223344";
+		control  <= "00011";		
+		wait for 20 ns; 	
+		
+		wait for 100 ns;
+
+		-- ori
+		datain_a <= X"01234567";
+		datain_b <= X"11223344";
+		control  <= "00100";		
+		wait for 20 ns; 	
+			
+		wait for 100 ns;
+
+		-- and
+		datain_a <= X"01234567";
+		datain_b <= X"11223344";
+		control  <= "00101";		
+		wait for 20 ns; 	
+
+		wait for 100 ns;
+
+		-- andi
+		datain_a <= X"01234567";
+		datain_b <= X"11223344";
+		control  <= "00110";		
+		wait for 20 ns; 	
+
+		wait for 100 ns;
+
+		-- sll
+		datain_a <= X"01234567";
+		datain_b <= X"00000011";
+		control  <= "00111";		
+		wait for 20 ns; 	
+		
+		wait for 100 ns;
+
+		-- slli
+		datain_a <= X"01234567";
+		datain_b <= X"00000011";
+		control  <= "01000";		
+		wait for 20 ns; 			
+
+		wait for 100 ns;
+
+		-- srl
+		datain_a <= X"01234567";
+		datain_b <= X"00000011";
+		control  <= "01001";		
+		wait for 20 ns; 
+		
+		wait for 100 ns;
+
+		-- srli
+		datain_a <= X"01234567";
+		datain_b <= X"00000011";
+		control  <= "01010";		
+		wait for 20 ns; 	
+
+		wait for 100 ns;
+
+		-- other
+		datain_a <= X"01234567";
+		datain_b <= X"00000011";
+		control  <= "01011";		
+		wait for 20 ns; 		
 
 		wait; -- will wait forever
 	END PROCESS;
