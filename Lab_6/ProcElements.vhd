@@ -17,6 +17,10 @@ end entity BusMux2to1;
 architecture selection of BusMux2to1 is
 begin
 -- Add your code here
+	with selector select
+		Result <= In0 when '0',
+			  In1 when others;
+
 end architecture selection;
 
 --------------------------------------------------------------------------------
@@ -41,9 +45,54 @@ entity Control is
 end Control;
 
 architecture Boss of Control is
-begin
--- Add your code here
+signal Path: std_logic_vector(4 downto 0);
+begin 
+	Path <=        	"00000" when opcode = "0110011" and funct3= "000" and funct7 = "0000000" else	--add
+			"10001" when opcode = "0010011" and funct3= "000" else	 			--addi
+			"00010" when opcode = "0110011" and funct3= "000" and funct7 = "0100000" else	--sub
+			"00011" when opcode = "0110011" and funct3= "110" and funct7 = "0000000"else	--or
+			"10100" when opcode = "0010011" and funct3= "110" else 				--ori
+			"00101" when opcode = "0110011" and funct3= "111" and funct7 = "0000000"else	--and
+			"10110" when opcode = "0010011" and funct3= "000" else 				--andi
+			"00111" when opcode = "0110011" and funct3= "001" and funct7 = "0000000"else	--sll
+			"11000" when opcode = "0010011" and funct3= "001" else				--slli
+			"01001" when opcode = "0110011" and funct3= "101" and funct7 = "0000000"else	--srl
+			"11010" when opcode = "0010011" and funct3= "101" else				--srli
+			"00010" when opcode = "1100011" else						--beq or bne	
+			"10001" when opcode = "0000011" else						--lw		
+			"10001" when opcode = "0100011" else						--sw
+			"11110" when opcode = "0110111" else						--lui
+			"01111";
 
+	ALUCtrl <= Path;
+
+	ImmGen <= 	"00" when opcode = "0010011" or opcode = "0000011" else				-- I Type
+		 	"01" when opcode = "0100011" else						-- S Type
+		  	"10" when opcode = "1100011" else						-- B Type
+		  	"11";	
+	
+	Branch <= 	"01" when opcode = "1100011" and funct3 = "000" else		--beq
+		  	"10" when opcode = "1100011" and funct3 = "001" else		--bne
+		  	"00";	
+
+	MemRead <= 	'0' when opcode = "0000011" else
+			'1';
+
+	MemtoReg <= 	'1' when opcode = "0000011" else			-- lw
+			'0'; 
+
+	MemWrite <= 	'1' when opcode = "0100011" else
+			'0';
+
+	RegWrite <= 	'1' when (opcode = "0110111" or opcode = "0000011" or opcode = "0010011" or opcode = "0110011") and clk = '0' else
+		    	'0';
+
+	ALUSrc <= 	'0' when opcode = "0110011" or opcode = "1100011" or opcode = "XXXXXXX"else
+		  	'1';
+	
+			
+	
+			
 end Boss;
 
 --------------------------------------------------------------------------------
@@ -62,6 +111,14 @@ end entity ProgramCounter;
 architecture executive of ProgramCounter is
 begin
 -- Add your code here
-
+	programCount: process(Reset,Clock)
+		begin 
+		if Reset = '1' then
+			PCout <= X"00400000";
+		end if;
+		if rising_edge(Clock) then
+			PCout <= PCin;
+		end if;
+	end process;
+	
 end executive;
---------------------------------------------------------------------------------
